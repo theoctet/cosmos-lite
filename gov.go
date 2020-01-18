@@ -22,16 +22,6 @@ func (c *CosmosLite) ParamTallying() (result gov.TallyParams, err error) {
 	return result, err
 }
 
-func (c *CosmosLite) QueryProposal(proposalID uint64) (result gov.Proposal, err error) {
-	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalParams(proposalID))
-	if err != nil {
-		return result, err
-	}
-
-	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryProposal), bytes, &result)
-	return result, err
-}
-
 func (c *CosmosLite) QueryProposals(status gov.ProposalStatus, limit uint64, voter, depositor sdk.AccAddress) (result gov.Proposals, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalsParams(status, limit, voter, depositor))
 	if err != nil {
@@ -42,13 +32,13 @@ func (c *CosmosLite) QueryProposals(status gov.ProposalStatus, limit uint64, vot
 	return result, err
 }
 
-func (c *CosmosLite) QueryDeposit(proposalID uint64, depositor sdk.AccAddress) (result gov.Deposit, err error) {
-	bytes, err := c.cdc.MarshalJSON(gov.NewQueryDepositParams(proposalID, depositor))
+func (c *CosmosLite) QueryProposal(proposalID uint64) (result gov.Proposal, err error) {
+	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalParams(proposalID))
 	if err != nil {
 		return result, err
 	}
 
-	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryDeposit), bytes, &result)
+	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryProposal), bytes, &result)
 	return result, err
 }
 
@@ -62,13 +52,13 @@ func (c *CosmosLite) QueryDeposits(proposalID uint64) (result gov.Deposits, err 
 	return result, err
 }
 
-func (c *CosmosLite) QueryVote(proposalID uint64, voter sdk.AccAddress) (result gov.Vote, err error) {
-	bytes, err := c.cdc.MarshalJSON(gov.NewQueryVoteParams(proposalID, voter))
+func (c *CosmosLite) QueryDeposit(proposalID uint64, depositor sdk.AccAddress) (result gov.Deposit, err error) {
+	bytes, err := c.cdc.MarshalJSON(gov.NewQueryDepositParams(proposalID, depositor))
 	if err != nil {
 		return result, err
 	}
 
-	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryVote), bytes, &result)
+	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryDeposit), bytes, &result)
 	return result, err
 }
 
@@ -79,6 +69,16 @@ func (c *CosmosLite) QueryVotes(proposalID uint64) (result gov.Votes, err error)
 	}
 
 	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryVotes), bytes, &result)
+	return result, err
+}
+
+func (c *CosmosLite) QueryVote(proposalID uint64, voter sdk.AccAddress) (result gov.Vote, err error) {
+	bytes, err := c.cdc.MarshalJSON(gov.NewQueryVoteParams(proposalID, voter))
+	if err != nil {
+		return result, err
+	}
+
+	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryVote), bytes, &result)
 	return result, err
 }
 

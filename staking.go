@@ -7,16 +7,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/staking"
 )
 
-func (c *CosmosLite) QueryValidator(validatorAddr sdk.ValAddress) (result staking.Validator, err error) {
-	bytes, err := c.cdc.MarshalJSON(staking.NewQueryValidatorParams(validatorAddr))
-	if err != nil {
-		return result, err
-	}
-
-	err = c.query(fmt.Sprintf("custom/%s/%s", staking.QuerierRoute, staking.QueryValidator), bytes, &result)
-	return result, err
-}
-
 func (c *CosmosLite) QueryValidators(page, limit int, status string) (result staking.Validators, err error) {
 	bytes, err := c.cdc.MarshalJSON(staking.NewQueryValidatorsParams(page, limit, status))
 	if err != nil {
@@ -24,6 +14,16 @@ func (c *CosmosLite) QueryValidators(page, limit int, status string) (result sta
 	}
 
 	err = c.query(fmt.Sprintf("custom/%s/%s", staking.QuerierRoute, staking.QueryValidators), bytes, &result)
+	return result, err
+}
+
+func (c *CosmosLite) QueryValidator(validatorAddr sdk.ValAddress) (result staking.Validator, err error) {
+	bytes, err := c.cdc.MarshalJSON(staking.NewQueryValidatorParams(validatorAddr))
+	if err != nil {
+		return result, err
+	}
+
+	err = c.query(fmt.Sprintf("custom/%s/%s", staking.QuerierRoute, staking.QueryValidator), bytes, &result)
 	return result, err
 }
 

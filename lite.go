@@ -7,12 +7,12 @@ import (
 )
 
 type CosmosLite struct {
-	*client.HTTP
+	RPC *client.HTTP
 	cdc *codec.Codec
 }
 
 func (c *CosmosLite) query(path string, data common.HexBytes, result interface{}) error {
-	res, err := c.ABCIQuery(path, data)
+	res, err := c.RPC.ABCIQuery(path, data)
 	if err != nil {
 		return err
 	}
