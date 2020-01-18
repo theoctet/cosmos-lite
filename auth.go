@@ -7,7 +7,7 @@ import (
 	"github.com/cosmos/cosmos-sdk/x/auth"
 )
 
-func (c *CosmosLite) Account(addr sdk.AccAddress) (result auth.Account, err error) {
+func (c *CosmosLite) QueryAccount(addr sdk.AccAddress) (result auth.Account, err error) {
 	bytes, err := c.cdc.MarshalJSON(auth.NewQueryAccountParams(addr))
 	if err != nil {
 		return nil, err

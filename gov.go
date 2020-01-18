@@ -22,7 +22,7 @@ func (c *CosmosLite) ParamTallying() (result gov.TallyParams, err error) {
 	return result, err
 }
 
-func (c *CosmosLite) Proposal(proposalID uint64) (result gov.Proposal, err error) {
+func (c *CosmosLite) QueryProposal(proposalID uint64) (result gov.Proposal, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalParams(proposalID))
 	if err != nil {
 		return result, err
@@ -32,7 +32,7 @@ func (c *CosmosLite) Proposal(proposalID uint64) (result gov.Proposal, err error
 	return result, err
 }
 
-func (c *CosmosLite) Proposals(status gov.ProposalStatus, limit uint64, voter, depositor sdk.AccAddress) (result gov.Proposals, err error) {
+func (c *CosmosLite) QueryProposals(status gov.ProposalStatus, limit uint64, voter, depositor sdk.AccAddress) (result gov.Proposals, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalsParams(status, limit, voter, depositor))
 	if err != nil {
 		return result, err
@@ -42,7 +42,7 @@ func (c *CosmosLite) Proposals(status gov.ProposalStatus, limit uint64, voter, d
 	return result, err
 }
 
-func (c *CosmosLite) Deposit(proposalID uint64, depositor sdk.AccAddress) (result gov.Deposit, err error) {
+func (c *CosmosLite) QueryDeposit(proposalID uint64, depositor sdk.AccAddress) (result gov.Deposit, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryDepositParams(proposalID, depositor))
 	if err != nil {
 		return result, err
@@ -52,7 +52,7 @@ func (c *CosmosLite) Deposit(proposalID uint64, depositor sdk.AccAddress) (resul
 	return result, err
 }
 
-func (c *CosmosLite) Deposits(proposalID uint64) (result gov.Deposits, err error) {
+func (c *CosmosLite) QueryDeposits(proposalID uint64) (result gov.Deposits, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalParams(proposalID))
 	if err != nil {
 		return result, err
@@ -62,7 +62,7 @@ func (c *CosmosLite) Deposits(proposalID uint64) (result gov.Deposits, err error
 	return result, err
 }
 
-func (c *CosmosLite) Vote(proposalID uint64, voter sdk.AccAddress) (result gov.Vote, err error) {
+func (c *CosmosLite) QueryVote(proposalID uint64, voter sdk.AccAddress) (result gov.Vote, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryVoteParams(proposalID, voter))
 	if err != nil {
 		return result, err
@@ -72,7 +72,7 @@ func (c *CosmosLite) Vote(proposalID uint64, voter sdk.AccAddress) (result gov.V
 	return result, err
 }
 
-func (c *CosmosLite) Votes(proposalID uint64) (result gov.Votes, err error) {
+func (c *CosmosLite) QueryVotes(proposalID uint64) (result gov.Votes, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalParams(proposalID))
 	if err != nil {
 		return result, err
@@ -82,7 +82,7 @@ func (c *CosmosLite) Votes(proposalID uint64) (result gov.Votes, err error) {
 	return result, err
 }
 
-func (c *CosmosLite) Tally(proposalID uint64) (result gov.TallyResult, err error) {
+func (c *CosmosLite) QueryTally(proposalID uint64) (result gov.TallyResult, err error) {
 	bytes, err := c.cdc.MarshalJSON(gov.NewQueryProposalParams(proposalID))
 	if err != nil {
 		return result, err

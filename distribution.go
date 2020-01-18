@@ -27,7 +27,7 @@ func (c *CosmosLite) ParamWithdrawAddrEnabled() (result bool, err error) {
 	return result, err
 }
 
-func (c *CosmosLite) ValidatorOutstandingRewards(validatorAddr sdk.ValAddress) (result distribution.ValidatorOutstandingRewards, err error) {
+func (c *CosmosLite) QueryValidatorOutstandingRewards(validatorAddr sdk.ValAddress) (result distribution.ValidatorOutstandingRewards, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryValidatorOutstandingRewardsParams(validatorAddr))
 	if err != nil {
 		return result, err
@@ -37,7 +37,7 @@ func (c *CosmosLite) ValidatorOutstandingRewards(validatorAddr sdk.ValAddress) (
 	return result, err
 }
 
-func (c *CosmosLite) ValidatorCommission(validatorAddr sdk.ValAddress) (result distribution.ValidatorAccumulatedCommission, err error) {
+func (c *CosmosLite) QueryValidatorCommission(validatorAddr sdk.ValAddress) (result distribution.ValidatorAccumulatedCommission, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryValidatorCommissionParams(validatorAddr))
 	if err != nil {
 		return result, err
@@ -47,7 +47,7 @@ func (c *CosmosLite) ValidatorCommission(validatorAddr sdk.ValAddress) (result d
 	return result, err
 }
 
-func (c *CosmosLite) ValidatorSlashes(validatorAddr sdk.ValAddress, startingHeight, endingHeight uint64) (result distribution.ValidatorSlashEvents, err error) {
+func (c *CosmosLite) QueryValidatorSlashes(validatorAddr sdk.ValAddress, startingHeight, endingHeight uint64) (result distribution.ValidatorSlashEvents, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryValidatorSlashesParams(validatorAddr, startingHeight, endingHeight))
 	if err != nil {
 		return result, err
@@ -57,7 +57,7 @@ func (c *CosmosLite) ValidatorSlashes(validatorAddr sdk.ValAddress, startingHeig
 	return result, err
 }
 
-func (c *CosmosLite) DelegationRewards(delegatorAddr sdk.AccAddress, validatorAddr sdk.ValAddress) (result sdk.DecCoins, err error) {
+func (c *CosmosLite) QueryDelegationRewards(delegatorAddr sdk.AccAddress, validatorAddr sdk.ValAddress) (result sdk.DecCoins, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryDelegationRewardsParams(delegatorAddr, validatorAddr))
 	if err != nil {
 		return result, err
@@ -67,7 +67,7 @@ func (c *CosmosLite) DelegationRewards(delegatorAddr sdk.AccAddress, validatorAd
 	return result, err
 }
 
-func (c *CosmosLite) DelegatorTotalRewards(delegatorAddr sdk.AccAddress) (result distribution.QueryDelegatorTotalRewardsResponse, err error) {
+func (c *CosmosLite) QueryDelegatorTotalRewards(delegatorAddr sdk.AccAddress) (result distribution.QueryDelegatorTotalRewardsResponse, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryDelegatorParams(delegatorAddr))
 	if err != nil {
 		return result, err
@@ -77,7 +77,7 @@ func (c *CosmosLite) DelegatorTotalRewards(delegatorAddr sdk.AccAddress) (result
 	return result, err
 }
 
-func (c *CosmosLite) DelegatorValidators(delegatorAddr sdk.AccAddress) (result []sdk.ValAddress, err error) {
+func (c *CosmosLite) QueryDelegatorValidators(delegatorAddr sdk.AccAddress) (result []sdk.ValAddress, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryDelegatorParams(delegatorAddr))
 	if err != nil {
 		return result, err
@@ -87,7 +87,7 @@ func (c *CosmosLite) DelegatorValidators(delegatorAddr sdk.AccAddress) (result [
 	return result, err
 }
 
-func (c *CosmosLite) DelegatorWithdrawAddress(delegatorAddr sdk.AccAddress) (result sdk.AccAddress, err error) {
+func (c *CosmosLite) QueryDelegatorWithdrawAddr(delegatorAddr sdk.AccAddress) (result sdk.AccAddress, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryDelegatorWithdrawAddrParams(delegatorAddr))
 	if err != nil {
 		return result, err
@@ -97,7 +97,7 @@ func (c *CosmosLite) DelegatorWithdrawAddress(delegatorAddr sdk.AccAddress) (res
 	return result, err
 }
 
-func (c *CosmosLite) CommunityPool() (result sdk.DecCoins, err error) {
+func (c *CosmosLite) QueryCommunityPool() (result sdk.DecCoins, err error) {
 	err = c.query(fmt.Sprintf("custom/%s/%s", distribution.QuerierRoute, distribution.QueryCommunityPool), nil, &result)
 	return result, err
 }
