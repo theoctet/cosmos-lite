@@ -77,7 +77,7 @@ func (c *CosmosLite) QueryDelegatorTotalRewards(delegatorAddr sdk.AccAddress) (r
 	return result, err
 }
 
-func (c *CosmosLite) QueryDelegatorValidators(delegatorAddr sdk.AccAddress) (result []sdk.ValAddress, err error) {
+func (c *CosmosLite) QueryDelegatorValidatorAddrs(delegatorAddr sdk.AccAddress) (result []sdk.ValAddress, err error) {
 	bytes, err := c.cdc.MarshalJSON(distribution.NewQueryDelegatorParams(delegatorAddr))
 	if err != nil {
 		return result, err
