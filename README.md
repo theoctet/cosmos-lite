@@ -1,1 +1,1 @@
-# cosmos-lite
+# Cosmos Lite

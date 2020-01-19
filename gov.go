@@ -91,3 +91,23 @@ func (c *CosmosLite) QueryTally(proposalID uint64) (result gov.TallyResult, err 
 	err = c.query(fmt.Sprintf("custom/%s/%s", gov.QuerierRoute, gov.QueryTally), bytes, &result)
 	return result, err
 }
+
+// nolint:dupl
+func (c *CosmosLite) QueryAllProposals() (result gov.Proposals, err error) {
+	kvs, err := c.querySubspace(gov.StoreKey, gov.ProposalsKeyPrefix)
+	if err != nil {
+		return result, err
+	}
+
+	result = make(gov.Proposals, 0, kvs.Len())
+	for i := 0; i < kvs.Len(); i++ {
+		var proposal gov.Proposal
+		if err := c.cdc.UnmarshalBinaryLengthPrefixed(kvs[i].Value, &proposal); err != nil {
+			return nil, err
+		}
+
+		result = append(result, proposal)
+	}
+
+	return result, nil
+}
